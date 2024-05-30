@@ -17,11 +17,11 @@ Solution:  Can combine filter and sort logic more effectively.
 
 5. Unnecessary Mapping for Formatted Balances
 Problem: The formattedBalances variable is created but never used, adding unnecessary computation.
-Solution: Integrate formatting directly within the rows mapping.
+Solution:  Can integrate formatting directly within the rows mapping.
 
 6. Type Mismatch in sortedBalances
 Problem: The getPriority function expects a blockchain property, but WalletBalance doesn't have it.
-Solution: Ensure WalletBalance includes all necessary properties like blockchain.
+Solution: can ensure WalletBalance includes all necessary properties like blockchain.
 
 //Corrected React Code
 
