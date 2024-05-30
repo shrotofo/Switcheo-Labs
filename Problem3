@@ -54,6 +54,31 @@ class Datasource {
   }
 }
 
+interface WalletBalance {
+  currency: string;
+  amount: number;
+  blockchain: string;  // Added the 'blockchain' property to ensure proper functioning of the 'getPriority' function
+}
+
+interface FormattedWalletBalance extends WalletBalance {
+  formatted: string;
+}
+
+class Datasource {
+  private url: string;
+  constructor(url: string) {
+    this.url = url;
+  }
+
+  async getPrices(): Promise<{ [key: string]: number }> {
+    const response = await fetch(this.url);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  }
+}
+
 interface Props extends BoxProps {}
 
 const WalletPage: React.FC<Props> = (props: Props) => {
@@ -61,14 +86,18 @@ const WalletPage: React.FC<Props> = (props: Props) => {
   const balances = useWalletBalances();
   const [prices, setPrices] = useState<{ [key: string]: number }>({});
 
-  // useRef to store the Datasource instance
-  const datasource = useRef(new Datasource("https://interview.switcheo.com/prices.json")).current;
+  // Use useRef to store the Datasource instance
+  const datasourceRef = useRef<Datasource | null>(null);
 
   useEffect(() => {
+    if (!datasourceRef.current) {
+      datasourceRef.current = new Datasource("https://interview.switcheo.com/prices.json");
+    }
+    const datasource = datasourceRef.current;
     datasource.getPrices()
-      .then(setPrices)
+      .then(prices => setPrices(prices))  // Correctly using setPrices(prices)
       .catch(console.error);  // Corrected 'console.err' to 'console.error'
-  }, [datasource]);  // Added datasource to the dependency array
+  }, []);
 
   const getPriority = (blockchain: string): number => {
     switch (blockchain) {
@@ -106,4 +135,5 @@ const WalletPage: React.FC<Props> = (props: Props) => {
     </div>
   );
 };
+
 
