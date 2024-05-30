@@ -3,7 +3,6 @@ Computational inefficiency and anti patterns :
 Problem: The Datasource instance created inside useEffect can lead to unnecessary re-rendering.
 Solution: Can use useRef to store the instance and initialize Datasource outside the component.
 
-
 2. Incorrect Use of console.err
 Problem: console.err is incorrect and won't log errors properly.
 Solution: Can use console.error to correctly log errors.
