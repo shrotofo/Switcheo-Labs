@@ -3,56 +3,28 @@ Computational inefficiency and anti patterns :
 Problem: The Datasource instance created inside useEffect can lead to unnecessary re-rendering.
 Solution: Can use useRef to store the instance and initialize Datasource outside the component.
 
-2. Missing Dependency in useEffect
-Problem: The useEffect dependency array is empty, so if the URL changes, it won't re-run.
-Solution: Can add dependencies (like datasource) to the array to ensure it re-runs when necessary.
 
-3. Incorrect Use of console.err
+2. Incorrect Use of console.err
 Problem: console.err is incorrect and won't log errors properly.
 Solution: Can use console.error to correctly log errors.
 
-4. Priority Calculation and Filter Logic
+3. Priority Calculation and Filter Logic
 Problem: The filter logic in useMemo has redundant checks and uses an undefined variable.
 Solution:  Can simplify the filter logic and use correct variable names.
 
-5. Unnecessary Mapping and Sorting Inside useMemo
+4. Unnecessary Mapping and Sorting Inside useMemo
 Problem: Mapping and sorting in useMemo can be simplified and optimized.
 Solution:  Can combine filter and sort logic more effectively.
 
-6. Unnecessary Mapping for Formatted Balances
+5. Unnecessary Mapping for Formatted Balances
 Problem: The formattedBalances variable is created but never used, adding unnecessary computation.
 Solution: Integrate formatting directly within the rows mapping.
 
-7. Type Mismatch in sortedBalances
+6. Type Mismatch in sortedBalances
 Problem: The getPriority function expects a blockchain property, but WalletBalance doesn't have it.
 Solution: Ensure WalletBalance includes all necessary properties like blockchain.
 
 Corrected React Code
-
-interface WalletBalance {
-  currency: string;
-  amount: number;
-  blockchain: string;  // Added the 'blockchain' property to ensure functioning of  getPriority func
-}
-
-interface FormattedWalletBalance extends WalletBalance {
-  formatted: string;
-}
-
-class Datasource {
-  private url: string;
-  constructor(url: string) {
-    this.url = url;
-  }
-
-  async getPrices(): Promise<{ [key: string]: number }> {
-    const response = await fetch(this.url);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  }
-}
 
 interface WalletBalance {
   currency: string;
