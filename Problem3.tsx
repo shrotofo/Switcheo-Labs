@@ -1,6 +1,6 @@
-Computational inefficiency and anti patterns : 
+// Computational inefficiency and anti patterns : 
 1. State Initialization within useEffect
-Problem: The Datasource instance created inside useEffect can lead to unnecessary re-rendering.
+Problem : The Datasource instance created inside useEffect can lead to unnecessary re-rendering.
 Solution: Can use useRef to store the instance and initialize Datasource outside the component.
 
 2. Incorrect Use of console.err
@@ -23,7 +23,7 @@ Solution: Integrate formatting directly within the rows mapping.
 Problem: The getPriority function expects a blockchain property, but WalletBalance doesn't have it.
 Solution: Ensure WalletBalance includes all necessary properties like blockchain.
 
-Corrected React Code
+//Corrected React Code
 
 interface WalletBalance {
   currency: string;
